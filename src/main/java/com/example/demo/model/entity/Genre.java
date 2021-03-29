@@ -15,16 +15,16 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="performer")
-public class Performer {
+@Table(name = "genre")
+public class Genre {
 
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "genre")
+	private String genre;
 
 	@Column(name = "del_flg")
 	private int delFlg;
@@ -36,9 +36,10 @@ public class Performer {
 	private Timestamp updateDate;
 
 
-	@Transient //データの永続化を回避する（データベースに入れないということ？）
-	@OneToMany(targetEntity = MovieMain.class, mappedBy = "performer")
-	//↑ mappedBy→所有者側のエンティティクラス(MovieMain)で関係を保持しているフィールドの名前を指定する
-	@JoinColumn(name = "id", referencedColumnName = "performer_id")
-	private List<MovieMain> movieMainList;
+	//外部キー設定
+	@Transient
+	@OneToMany(targetEntity = MovieMain.class, mappedBy = "genre")
+	@JoinColumn(name = "id", referencedColumnName = "genre_id")
+	private List<MovieMain> movieMain;
+
 }

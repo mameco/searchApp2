@@ -21,7 +21,7 @@ public class MovieMain {
 	@Id //主キーにつける
 	@GenericGenerator(name = "gen", strategy = "increment") //何？
 	@GeneratedValue(generator = "gen") //プライマリキーカラムにユニークな値を自動で生成するアノテーション
-	private int id;
+	private long id;
 
 	@Column(name = "title")
 	private String title;
@@ -44,10 +44,14 @@ public class MovieMain {
 	@Column(name = "update_date")
 	private Timestamp updateDate;
 
+
 	//外部キー設定
 	@ManyToOne(targetEntity = Performer.class) //targetEntity→関連付けの対象となるエンティティクラス
 	@JoinColumn(name = "performer_id", referencedColumnName = "id", insertable = false, updatable = false)
 	//↑inserttable属性は、@JoinColumnで指定したカラムをSQLのINSERT文に含むかどうか指定する属性
 	private Performer performer;
 
+	@ManyToOne(targetEntity = Genre.class)
+	@JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false)
+	private Genre genre;
 }
